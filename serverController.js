@@ -1,7 +1,7 @@
-const Club = require('./clubModel');
-const Code = require('./codeModel');
-const Fan = require('./fanModel');
-const Profile = require('./profileModel');
+const Club = require('./models/clubModel');
+const Code = require('./models/codeModel');
+const Fan = require('./models/fanModel');
+const Profile = require('./models/profileModel');
 
 // Function to create a new club
 const createClub = async (req, res) => {
@@ -228,75 +228,100 @@ const createProfile = async (req, res) => {
     }
 
         // Update club's "members" field
-        const clubToUpdate = await Club.findById(club);
-        if (clubToUpdate) {
-          clubToUpdate.members.push(profile._id);
-          await clubToUpdate.save();
-        }
-    
-        res.status(201).json(profile);
-      } catch (error) {
-        res.status(400).json({ error: error.message });
+    const clubToUpdate = await Club.findById(club);
+    if (clubToUpdate) {
+      clubToUpdate.members.push(profile._id);
+      await clubToUpdate.save();
+    }
+
+    res.status(201).json(profile);
+  } catch (error) {
+    res.status(400).json({ error: error.message });
+  }
+};
+
+// Function to activate a code and add points and create a history record in the profile
+const activateCode = async (req, res) => {
+    const { identifier, code } = req.body;
+  
+    try {
+      // Check if the code exists and is valid
+      const existingCode = await Code.findOne({ code });
+      if (!existingCode) {
+        return res.status(404).json({ error: 'Code not found' });
       }
-    };
-    
-    // Function to activate a code and add points and create a history record in the profile
-    const activateCode = async (req, res) => {
-      const { fanId, code } = req.body;
-    
-      try {
-        // Check if the code exists and is valid
-        const existingCode = await Code.findOne({ code });
-        if (!existingCode) {
-          return res.status(404).json({ error: 'Code not found' });
-        }
-    
-        if (existingCode.expires < new Date()) {
-          return res.status(400).json({ error: 'Code has expired' });
-        }
-    
-        // Find the profile of the fan
-        const profile = await Profile.findOne({ fanId });
-    
-        if (!profile) {
-          return res.status(404).json({ error: 'Profile not found' });
-        }
-    
-        // Add points to the profile
-        profile.points += existingCode.value;
-    
-        // Create a history record in the profile
-        const newTransaction = {
-          txType: 'Activation',
-          txDescription: `Activated code ${code}`,
-          txCode: code,
-          txValue: existingCode.value,
-          txDate: new Date(),
-        };
-    
-        profile.history.push(newTransaction);
-    
-        // Save changes to the profile
-        await profile.save();
-    
-        res.json(profile);
-      } catch (error) {
-        res.status(400).json({ error: error.message });
+  
+      if (existingCode.expires < new Date()) {
+        return res.status(400).json({ error: 'Code has expired' });
       }
-    };
-    
-    module.exports = {
-      createClub,
-      updateClubName,
-      createCode,
-      updateCodeDescription,
-      updateCodeExpiry,
-      updateCodeStatus,
-      createFan,
-      updateFanMobile,
-      updateFanEmail,
-      setFanRtId,
-      createProfile,
-      activateCode,
-    };
-    
+  
+      let fan;
+  
+      // Check if the identifier is an email
+      if (identifier.includes('@')) {
+        fan = await Fan.findOne({ fanEmail: identifier });
+      }
+      // Check if the identifier is a phone number
+      else if (/^\d+$/.test(identifier)) {
+        fan = await Fan.findOne({
+          $or: [
+            { 'fanMobile.countryCode': identifier },
+            { 'fanMobile.number': identifier },
+          ],
+        });
+      }
+      // Check if the identifier is an rtId
+      else {
+        fan = await Fan.findOne({ rtId: identifier });
+      }
+  
+      if (!fan) {
+        return res.status(404).json({ error: 'Fan not found' });
+      }
+  
+      // Find the profile of the fan
+      const profile = await Profile.findOne({ fanId: fan._id });
+  
+      if (!profile) {
+        return res.status(404).json({ error: 'Profile not found' });
+      }
+  
+      // Add points to the profile
+      profile.points += existingCode.value;
+  
+      // Create a history record in the profile
+      const newTransaction = {
+        txType: 'Activation',
+        txDescription: `Activated code ${code}`,
+        txCode: code,
+        txValue: existingCode.value,
+        txDate: new Date(),
+      };
+  
+      profile.history.push(newTransaction);
+  
+      // Save changes to the profile
+      await profile.save();
+  
+      res.json(profile);
+    } catch (error) {
+      res.status(400).json({ error: error.message });
+    }
+  };
+  
+
+module.exports = {
+  createClub,
+  updateClubName,
+  createCode,
+  updateCodeDescription,
+  updateCodeExpiry,
+  updateCodeStatus,
+  createFan,
+  updateFanMobile,
+  updateFanEmail,
+  setFanRtId,
+  createProfile,
+  activateCode,
+};
+

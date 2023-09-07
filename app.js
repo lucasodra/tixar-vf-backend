@@ -1,14 +1,18 @@
-// app.js
-
 const express = require('express');
+const bodyParser = require('body-parser');
 const app = express();
+const routes = require('./serverRoutes'); // Import your routes file here
 
-// Middlewares
-app.use(express.json()); // for parsing application/json
+// Middleware to parse JSON request bodies
+app.use(bodyParser.json());
 
-// Sample route
-app.get('/', (req, res) => {
-    res.send('TIXAR.SG');
+// Define routes
+app.use('/api', routes); // Use the routes defined in your routes file
+
+// Error handling middleware
+app.use((err, req, res, next) => {
+  console.error(err.stack);
+  res.status(500).json({ error: 'Something went wrong!' });
 });
 
-module.exports = app;
+module.exports = app; // Export the Express app
