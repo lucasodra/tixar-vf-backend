@@ -4,7 +4,7 @@ Welcome to the Club Management API! This guide will help you understand how to i
 ## API Base URL
 Before you start, make sure you know the base URL of the API. You'll use this URL to access the API endpoints.
 
-Base URL: https://example.com/api
+Base URL: https://localhost:3000/api
 
 ## Authentication
 You might need to log in or provide some form of authentication to use certain endpoints, like creating or updating clubs and codes. Check with the API documentation or your administrator for authentication requirements.
