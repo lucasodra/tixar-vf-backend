@@ -2,22 +2,10 @@ const mongoose = require('mongoose');
 
 // Define the Fan schema
 const fanSchema = new mongoose.Schema({
-  fanMobile: {
-    countryCode: {
-      type: String
-    },
-    number: {
-      type: String
-    },
-  },
-  fanEmail: {
+  rtId: {
     type: String,
     unique: true,
     required: true
-  },
-  rtId: {
-    type: String,
-    unique: true
   },
   profiles: [{
     type: mongoose.Schema.Types.ObjectId,

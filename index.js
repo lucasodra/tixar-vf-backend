@@ -9,12 +9,10 @@ mongoose.connect('mongodb://localhost/tixvf', {
 
 const db = mongoose.connection;
 
-// Handle database connection errors
 db.on('error', (err) => {
   console.error('MongoDB connection error:', err);
 });
 
-// Handle successful database connection
 db.once('open', () => {
   console.log('Connected to MongoDB');
   

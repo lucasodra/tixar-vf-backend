@@ -1,27 +1,33 @@
 const express = require('express');
 const router = express.Router();
+
+const isAuthenticated = require('./middleware/auth');
 const serverController = require('./serverController');
 
-// Routes for Club
-router.post('/clubs', serverController.createClub);
-router.put('/clubs/:clubId', serverController.updateClubName);
+router.use(isAuthenticated);
 
-// Routes for Code
-router.post('/codes', serverController.createCode);
-router.put('/codes/:codeId/description', serverController.updateCodeDescription);
-router.put('/codes/:codeId/expiry', serverController.updateCodeExpiry);
-router.put('/codes/:codeId/status', serverController.updateCodeStatus);
+// Club Routes
+router.post('/club', serverController.createClub);
+router.get('/clubs', serverController.getAllClubs);
+router.get('/club/:id', serverController.getClubById);
+router.put('/club/:id', serverController.updateClub);
+router.delete('/club/:id', serverController.deleteClub);
+router.post('/club/:clubId/join', serverController.joinClub);
 
-// Routes for Fan
-router.post('/fans', serverController.createFan);
-router.put('/fans/:fanId/mobile', serverController.updateFanMobile);
-router.put('/fans/:fanId/email', serverController.updateFanEmail);
-router.put('/fans/:fanId/rtid', serverController.setFanRtId);
+// Profile Routes
+router.get('/profiles', serverController.getProfilesByUser);
+router.post('/profile/redeem', serverController.redeemCode);
+router.delete('/profile/:id', serverController.deleteProfile);
 
-// Routes for Profile
-router.post('/profiles', serverController.createProfile);
+// Code Routes
+router.post('/code', serverController.createCode);
+router.get('/codes', serverController.getAllCodes);
+router.put('/code/:id', serverController.updateCode);
+router.delete('/code/:id', serverController.deleteCode);
 
-// Route for activating a code with an identifier
-router.post('/activate-code', serverController.activateCode);
+// Fan Routes
+router.get('/fans', serverController.getAllFans);
+router.get('/fan/:id', serverController.getFanById);
+router.get('/fan/me', serverController.getMyself);
 
 module.exports = router;

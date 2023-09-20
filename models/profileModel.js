@@ -13,9 +13,8 @@ const profileSchema = new mongoose.Schema({
         type: Number,
         default: 0
     },
-    history: [{
+    redemption: [{
         txType: String,
-        txDescription: String,
         txCode: String,
         txValue: Number,
         txDate: Date        
