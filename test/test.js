@@ -22,7 +22,7 @@ async function testCreateClub() {
 async function testUpdateClubName(clubId) {
   try {
     const response = await axios.put(`${baseUrl}/clubs/${clubId}`, {
-      name: 'Updated Club Name',
+      name: 'Updated Club HARIZZZ',
     });
     console.log('Update Club Name Response:', response.data);
   } catch (error) {
@@ -36,7 +36,7 @@ async function testCreateCode() {
     const response = await axios.post(`${baseUrl}/codes`, {
       code: 'TEST123',
       description: 'Test Code',
-      club: 'clubId', // Replace with the actual club ID
+      club: '6506d7c884891ef343c412bb', // Replace with the actual club ID
       expires: '2023-12-31',
       value: 100,
       status: 'Active',
@@ -163,16 +163,16 @@ async function testActivateCode(identifier, code) {
 }
 
 // Example usage of the test functions
-testCreateClub();
-testUpdateClubName();
+// testCreateClub();
+// testUpdateClubName("6506d7c884891ef343c412bb");
 testCreateCode();
-testUpdateCodeDescription();
-testUpdateCodeExpiry();
-testUpdateCodeStatus();
-testCreateFan();
-testUpdateFanMobile();
-testUpdateFanEmail();
-testSetFanRtId();
-testCreateProfile();
-testActivateCode();
+// testUpdateCodeDescription();
+// testUpdateCodeExpiry();
+// testUpdateCodeStatus();
+// testCreateFan();
+// testUpdateFanMobile();
+// testUpdateFanEmail();
+// testSetFanRtId();
+// testCreateProfile();
+// testActivateCode();
 
