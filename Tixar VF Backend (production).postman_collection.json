@@ -1,0 +1,650 @@
+{
+	"info": {
+		"name": "Tixar VF Backend (production)",
+		"description": "API Collection for Tixar VF",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+	},
+	"item": [
+		{
+			"name": "Club",
+			"item": [
+				{
+					"name": "Create Club",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "Taylor Swift Verified Fans",
+									"description": "Name of the club",
+									"type": "text"
+								},
+								{
+									"key": "clubImage",
+									"description": "Image file for the club",
+									"type": "file",
+									"src": "/Users/username/Desktop/taylorswift.jpeg"
+								},
+								{
+									"key": "description",
+									"value": "Lorem ipsum",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://vf.tixar.sg/api/club",
+							"protocol": "http",
+							"host": [
+								"vf",
+								"tixar",
+								"sg"
+							],
+							"path": [
+								"api",
+								"club"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Clubs",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://vf.tixar.sg/api/clubs",
+							"protocol": "http",
+							"host": [
+								"vf",
+								"tixar",
+								"sg"
+							],
+							"path": [
+								"api",
+								"clubs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Club By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://vf.tixar.sg/api/club/650eb4238549c664f2d9f9b6",
+							"protocol": "http",
+							"host": [
+								"vf",
+								"tixar",
+								"sg"
+							],
+							"path": [
+								"api",
+								"club",
+								"650eb4238549c664f2d9f9b6"
+							]
+						},
+						"description": "Replace ':id' with the specific ID of the club you wish to retrieve."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Club",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "multipart/form-data"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "name",
+									"value": "test2",
+									"description": "Updated name of the club",
+									"type": "text"
+								},
+								{
+									"key": "clubImage",
+									"description": "Updated image file for the club",
+									"type": "file",
+									"src": "/Users/username/Desktop/taylorswift.jpeg"
+								},
+								{
+									"key": "description",
+									"value": "ipsum lerem",
+									"type": "text"
+								}
+							]
+						},
+						"url": {
+							"raw": "http://vf.tixar.sg/api/club/650ebe22f6c637190528c1ce",
+							"protocol": "http",
+							"host": [
+								"vf",
+								"tixar",
+								"sg"
+							],
+							"path": [
+								"api",
+								"club",
+								"650ebe22f6c637190528c1ce"
+							]
+						},
+						"description": "Replace ':id' with the specific ID of the club you wish to update."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Club",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://vf.tixar.sg/api/club/650ebe22f6c637190528c1ce",
+							"protocol": "http",
+							"host": [
+								"vf",
+								"tixar",
+								"sg"
+							],
+							"path": [
+								"api",
+								"club",
+								"650ebe22f6c637190528c1ce"
+							]
+						},
+						"description": "Replace ':id' with the specific ID of the club you wish to delete."
+					},
+					"response": []
+				},
+				{
+					"name": "Join Club",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://vf.tixar.sg/api/club/650eb4238549c664f2d9f9b6/join",
+							"protocol": "http",
+							"host": [
+								"vf",
+								"tixar",
+								"sg"
+							],
+							"path": [
+								"api",
+								"club",
+								"650eb4238549c664f2d9f9b6",
+								"join"
+							]
+						},
+						"description": "Replace ':clubId' with the specific ID of the club you wish to join."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Profile",
+			"item": [
+				{
+					"name": "Get Profiles By User",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://vf.tixar.sg/api/profiles",
+							"protocol": "http",
+							"host": [
+								"vf",
+								"tixar",
+								"sg"
+							],
+							"path": [
+								"api",
+								"profiles"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Redeem Code",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"wildream\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://vf.tixar.sg/api/profile/redeem",
+							"protocol": "http",
+							"host": [
+								"vf",
+								"tixar",
+								"sg"
+							],
+							"path": [
+								"api",
+								"profile",
+								"redeem"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Profile",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://vf.tixar.sg/api/profile/:id",
+							"protocol": "http",
+							"host": [
+								"vf",
+								"tixar",
+								"sg"
+							],
+							"path": [
+								"api",
+								"profile",
+								":id"
+							],
+							"variable": [
+								{
+									"key": "id",
+									"value": ""
+								}
+							]
+						},
+						"description": "Replace ':id' with the specific ID of the profile you wish to delete."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Code",
+			"item": [
+				{
+					"name": "Create Code",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"wildream\",\n    \"value\": 10,\n    \"expires\": \"2025-12-31\",\n    \"status\": \"active\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://vf.tixar.sg/api/code",
+							"protocol": "http",
+							"host": [
+								"vf",
+								"tixar",
+								"sg"
+							],
+							"path": [
+								"api",
+								"code"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Codes",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://vf.tixar.sg/api/codes",
+							"protocol": "http",
+							"host": [
+								"vf",
+								"tixar",
+								"sg"
+							],
+							"path": [
+								"api",
+								"codes"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update Code",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"code\": \"wildestdream\",\n    \"value\": 15,\n    \"expires\": \"2030-12-31\",\n    \"status\": \"inactive\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://vf.tixar.sg/api/code/650ec603606fde9fe43f7622",
+							"protocol": "http",
+							"host": [
+								"vf",
+								"tixar",
+								"sg"
+							],
+							"path": [
+								"api",
+								"code",
+								"650ec603606fde9fe43f7622"
+							]
+						},
+						"description": "Replace ':id' with the specific ID of the code you wish to update."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Code",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://vf.tixar.sg/api/code/650ec603606fde9fe43f7622",
+							"protocol": "http",
+							"host": [
+								"vf",
+								"tixar",
+								"sg"
+							],
+							"path": [
+								"api",
+								"code",
+								"650ec603606fde9fe43f7622"
+							]
+						},
+						"description": "Replace ':id' with the specific ID of the code you wish to delete."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Fan",
+			"item": [
+				{
+					"name": "Get All Fans",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://vf.tixar.sg/api/fans",
+							"protocol": "http",
+							"host": [
+								"vf",
+								"tixar",
+								"sg"
+							],
+							"path": [
+								"api",
+								"fans"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get Fan By ID",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://vf.tixar.sg/api/fan/650e8bf502487acf50ac5627",
+							"protocol": "http",
+							"host": [
+								"vf",
+								"tixar",
+								"sg"
+							],
+							"path": [
+								"api",
+								"fan",
+								"650e8bf502487acf50ac5627"
+							]
+						},
+						"description": "Replace ':id' with the specific ID of the fan you wish to retrieve."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Myself",
+					"request": {
+						"auth": {
+							"type": "bearer",
+							"bearer": [
+								{
+									"key": "token",
+									"value": "",
+									"type": "string"
+								}
+							]
+						},
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://vf.tixar.sg/api/fan",
+							"protocol": "http",
+							"host": [
+								"vf",
+								"tixar",
+								"sg"
+							],
+							"path": [
+								"api",
+								"fan"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"variable": []
+}
