@@ -4,7 +4,6 @@ const app = express();
 const routes = require('./serverRoutes');
 
 app.use(bodyParser.json());
-
 app.use('/api', routes);
 
 app.use((err, req, res, next) => {
