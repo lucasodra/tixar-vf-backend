@@ -18,7 +18,7 @@ db.once('open', () => {
   console.log('Connected to MongoDB');
   
   // Start the Express server
-  const port = 3000;
+  const port = 3001;
   app.listen(port, () => {
     console.log(`VF Server is running on port ${port}`);
   });
