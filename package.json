@@ -4,6 +4,7 @@
   "description": "Verified Fan API service for TIXAR",
   "main": "index.js",
   "scripts": {
+    "start": "node index.js",
     "test": "nodemon index.js"
   },
   "author": "Lucas Liao",
