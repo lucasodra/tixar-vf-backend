@@ -1,8 +1,9 @@
+require('dotenv').config();
 const mongoose = require('mongoose');
 const app = require('./app'); // Import the Express app from app.js
 
 // Connect to MongoDB
-mongoose.connect('mongodb://localhost/tixvf', {
+mongoose.connect(process.env.MONGO_URI, {
   useNewUrlParser: true,
   useUnifiedTopology: true,
 });

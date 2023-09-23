@@ -2,15 +2,16 @@ const express = require('express');
 const router = express.Router();
 
 const { isAuthenticated } = require('./middleware/auth');
+const upload = require('./middleware/uploadMiddleware');
 const serverController = require('./serverController');
 
 router.use(isAuthenticated);
 
 // Club Routes
-router.post('/club', serverController.createClub);
+router.post('/club', upload.single('clubImage'), serverController.createClub);
 router.get('/clubs', serverController.getAllClubs);
 router.get('/club/:id', serverController.getClubById);
-router.put('/club/:id', serverController.updateClub);
+router.put('/club/:id', upload.single('clubImage'), serverController.updateClub);
 router.delete('/club/:id', serverController.deleteClub);
 router.post('/club/:clubId/join', serverController.joinClub);
 
@@ -28,6 +29,6 @@ router.delete('/code/:id', serverController.deleteCode);
 // Fan Routes
 router.get('/fans', serverController.getAllFans);
 router.get('/fan/:id', serverController.getFanById);
-router.get('/fan/me', serverController.getMyself);
+router.get('/fan', serverController.getMyself);
 
 module.exports = router;

@@ -1,16 +1,19 @@
 const mongoose = require('mongoose');
 
 const clubSchema = new mongoose.Schema({
-  name: String,
+  name: {
+    type: String,
+    required: true
+  },
+  imageUrl: String,
+  description: String,
   members: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Profile',
-    unique: true
+    ref: 'Profile'
   }],
   codes: [{
     type: mongoose.Schema.Types.ObjectId,
-    ref: 'Code',
-    unique: true
+    ref: 'Code'
   }]
 });
 
