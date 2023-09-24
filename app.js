@@ -6,18 +6,21 @@ const rateLimit = require('express-rate-limit');
 const { blockIPs } = require('./middleware/ipFilter');
 
 app.use(blockIPs);
-app.use(bodyParser.json());
-app.use('/api', routes);
-
 // Define the rate limiter
 const apiLimiter = rateLimit({
   windowMs: 15 * 60 * 1000,  // 15 minutes
-  max: 100,                  // Limit each IP to 100 requests per windowMs
+  max: 50,                  // Limit each IP to 50 requests per windowMs
   message: 'Too many requests from this IP, please try again after 15 minutes'
 });
 
 // Apply the rate limiter to all routes
 app.use(apiLimiter);
+
+
+app.use(bodyParser.json());
+app.use('/api', routes);
+
+
 
 
 app.use((err, req, res, next) => {
