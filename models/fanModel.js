@@ -7,6 +7,8 @@ const fanSchema = new mongoose.Schema({
     unique: true,
     required: true
   },
+  name: String,
+  phone: String,
   profiles: [{
     type: mongoose.Schema.Types.ObjectId,
     ref: 'Profile'

@@ -17,7 +17,7 @@ exports.isAuthenticated = async (req, res, next) => {
         var fan = await Fan.findOne({rtId: req.user.id});
 
         if (!fan) {
-            const newFan = new Fan({rtId: req.user.id});
+            const newFan = new Fan({rtId: req.user.id, name: req.user.name, phone: req.user.phone});
             await newFan.save();
             fan = newFan;
         }
