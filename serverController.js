@@ -270,7 +270,11 @@ exports.getFanById = async (req, res) => {
 
 exports.getMyself = async (req, res) => {
     try {
-        const fan = await Fan.findById(req.fan._id);
+        const fan = await Fan.findById(req.fan._id).populate({
+            path: 'profiles', 
+            populate: { path: 'club', select: 'name' } // Here we further populate the 'club' field and select only the 'name' of the club.
+        });
+        
         if (!fan) return res.status(404).json({message: "Fan not found"});
         res.json(fan);
     } catch(err) {
