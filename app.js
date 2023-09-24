@@ -3,8 +3,9 @@ const bodyParser = require('body-parser');
 const app = express();
 const routes = require('./serverRoutes');
 const rateLimit = require('express-rate-limit');
+const { blockIPs } = require('./middleware/ipFilter');
 
-
+app.use(blockIPs);
 app.use(bodyParser.json());
 app.use('/api', routes);
 
@@ -17,6 +18,7 @@ const apiLimiter = rateLimit({
 
 // Apply the rate limiter to all routes
 app.use(apiLimiter);
+
 
 app.use((err, req, res, next) => {
   console.error(err.stack);
