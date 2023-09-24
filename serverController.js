@@ -32,7 +32,13 @@ exports.createClub = async (req, res) => {
 
 exports.getAllClubs = async (req, res) => {
     try {
-        const clubs = await Club.find();
+        const clubs = await Club.find().populate({
+            path: 'members', 
+            populate: {
+                path: 'fanId',
+                select: 'rtId name phone'
+            }
+          });
         res.json(clubs);
     } catch(err) {
         res.status(500).json({error: err.message});
@@ -41,7 +47,13 @@ exports.getAllClubs = async (req, res) => {
 
 exports.getClubById = async (req, res) => {
     try {
-        const club = await Club.findById(req.params.id);
+        const club = await Club.findById(req.params.id).populate({
+            path: 'members', 
+            populate: {
+                path: 'fanId',
+                select: 'rtId name phone'
+            }
+          });
         if (!club) return res.status(404).json({message: "Club not found"});
         res.json(club);
     } catch(err) {
@@ -118,7 +130,10 @@ exports.joinClub = async (req, res) => {
 // Profile Controllers
 exports.getProfilesByUser = async (req, res) => {
     try {
-        const profiles = await Profile.find({ fanId: req.fan._id });
+        const profiles = await Profile.find({ fanId: req.fan._id }).populate({
+              path: 'club', 
+              select: 'name'
+            });
         res.json(profiles);
     } catch(err) {
         res.status(500).json({error: err.message});
@@ -248,7 +263,13 @@ exports.getAllFans = async (req, res) => {
         // ADMIN ONLY
         if (req.user.type != "admin") return res.status(403).json({message: "restricted"});
 
-        const fans = await Fan.find();
+        const fans = await Fan.find().populate({
+            path: 'profiles',
+            populate: {
+              path: 'club', 
+              select: 'name'
+            }
+          });
         res.json(fans);
     } catch(err) {
         res.status(500).json({error: err.message});
@@ -260,7 +281,13 @@ exports.getFanById = async (req, res) => {
         // ADMIN ONLY
         if (req.user.type != "admin") return res.status(403).json({message: "restricted"});
 
-        const fan = await Fan.findById(req.params.id);
+        const fan = await Fan.findById(req.params.id).populate({
+            path: 'profiles',
+            populate: {
+              path: 'club', 
+              select: 'name'
+            }
+          });;
         if (!fan) return res.status(404).json({message: "Fan not found"});
         res.json(fan);
     } catch(err) {
