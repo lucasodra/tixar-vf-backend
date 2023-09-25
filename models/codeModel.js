@@ -9,7 +9,8 @@ const codeSchema = new mongoose.Schema({
     description: String,
     club: {
       type: mongoose.Schema.Types.ObjectId,
-      ref: 'Club'
+      ref: 'Club',
+      required: true
     },
     expires: Date,
     value: Number,

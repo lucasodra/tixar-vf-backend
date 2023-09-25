@@ -226,7 +226,10 @@ exports.getAllCodes = async (req, res) => {
         // ADMIN ONLY
         if (req.user.type != "admin") return res.status(403).json({message: "restricted"});
 
-        const codes = await Code.find();
+        const codes = await Code.find().populate({
+            'path': 'club',
+            'select': 'name'
+        });
         res.json(codes);
     } catch(err) {
         res.status(500).json({error: err.message});
