@@ -132,7 +132,7 @@ exports.getProfilesByUser = async (req, res) => {
     try {
         const profiles = await Profile.find({ fanId: req.fan._id }).populate({
               path: 'club', 
-              select: 'name'
+              select: 'name description imageUrl'
             });
         res.json(profiles);
     } catch(err) {
