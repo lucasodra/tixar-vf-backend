@@ -2,8 +2,6 @@ const Club = require('./models/clubModel');
 const Profile = require('./models/profileModel');
 const Code = require('./models/codeModel');
 const Fan = require('./models/fanModel');
-const upload = require('./middleware/uploadMiddleware');
-const multer = require('multer');
 
 // Club Controllers
 exports.createClub = async (req, res) => {
@@ -75,9 +73,10 @@ exports.updateClub = async (req, res) => {
         if (req.body.description) {
             club.description = req.body.description;
         }
-
-        if (req.file && req.file.location) {
-            club.imageUrl = req.file.location;
+        
+        if (req.file) {
+            const imageUrl = req.file.location;
+            club.imageUrl = imageUrl;
         }
 
         await club.save();
@@ -100,13 +99,16 @@ exports.deleteClub = async (req, res) => {
 
 exports.joinClub = async (req, res) => {
     try {
-        const profile = new Profile({
-            fanId: req.fan._id,
-            club: req.params.clubId
-        });
+        let profile = await Profile.findOne({"fanId": req.fan._id, "club": req.params.clubId});
+        if (!profile) {
+            profile = new Profile({
+                fanId: req.fan._id,
+                club: req.params.clubId
+            });
 
-        await profile.save();
-
+            await profile.save();
+        }
+        
         // Update the Fan model to include the profile ID.
         const fan = await Fan.findById(req.fan._id);
         if(!fan.profiles.includes(profile._id)) {
