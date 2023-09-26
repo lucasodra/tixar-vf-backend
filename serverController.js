@@ -9,16 +9,10 @@ exports.createClub = async (req, res) => {
         // ADMIN ONLY
         if (req.user.type !== "admin") return res.status(403).json({ message: "restricted" });
         
-        console.log("### IMAGEURL");
         var imageUrl = null; 
-
-        console.log(req.file);
-        console.log(req.file.location);
         if (req.file) {
             imageUrl = req.file.location;
         }
-        console.log("### end of file upload.");
-
 
         const club = new Club({
             name: req.body.name,
