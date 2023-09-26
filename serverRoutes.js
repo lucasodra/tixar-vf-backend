@@ -6,6 +6,7 @@ const upload = require('./middleware/uploadMiddleware');
 const serverController = require('./serverController');
 
 router.use(isAuthenticated);
+router.use(upload.single(clubImage));
 
 // Club Routes
 router.post('/club', upload.single('clubImage'), serverController.createClub);
