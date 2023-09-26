@@ -13,6 +13,7 @@ const upload = multer({
             cb(null, { fieldName: file.fieldname });
         },
         key: function (req, file, cb) {
+            console.log("Processing file:", file.originalname);
             cb(null, `${folderName}/` + Date.now().toString() + '-' + file.originalname)
         }
     })
