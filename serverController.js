@@ -1,3 +1,4 @@
+const mongoose = require('mongoose');
 const Club = require('./models/clubModel');
 const Profile = require('./models/profileModel');
 const Code = require('./models/codeModel');
@@ -29,13 +30,22 @@ exports.createClub = async (req, res) => {
 
 exports.getAllClubs = async (req, res) => {
     try {
-        const clubs = await Club.find().populate({
-            path: 'members', 
-            populate: {
-                path: 'fanId',
-                select: 'rtId name phone'
+        const clubs = await Club.find().populate([
+            {
+                path: 'members', 
+                populate: {
+                    path: 'fanId',
+                    select: 'rtId name phone'
+                }
+            },
+            {
+                path: 'codes', 
+                populate: {
+                    path: 'codeId',
+                    select: 'code value expiry'
+                }
             }
-          });
+        ]);
         res.json(clubs);
     } catch(err) {
         res.status(500).json({error: err.message});
@@ -213,8 +223,16 @@ exports.createCode = async (req, res) => {
             return res.status(400).json({ message: "Code already exists." });
         }
 
-        const code = new Code(req.body);
+        const club = await Club.findOne({id: req.body.code});
+
+        if (!club) {
+            return res.status(400).json({ message: "Club dont exist"});
+        }
+    
         await code.save();
+
+        const code = new Code(req.body);
+        club.codes.push(mongoose.Schema.Types.ObjectId())        
         res.status(201).json(code);
     } catch(err) {
         res.status(500).json({error: err.message});
