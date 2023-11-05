@@ -41,7 +41,7 @@ exports.getAllClubs = async (req, res) => {
             {
                 path: 'codes', 
                 populate: {
-                    path: 'codeId',
+                    path: '_id',
                     select: 'code value expiry'
                 }
             }
