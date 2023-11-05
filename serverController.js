@@ -223,16 +223,16 @@ exports.createCode = async (req, res) => {
             return res.status(400).json({ message: "Code already exists." });
         }
 
-        const club = await Club.findOne({id: req.body.code});
+        const club = await Club.findOne({_id: req.body.club});
 
         if (!club) {
             return res.status(400).json({ message: "Club dont exist"});
         }
-    
-        await code.save();
 
         const code = new Code(req.body);
-        club.codes.push(mongoose.Schema.Types.ObjectId())        
+        await code.save();
+        club.codes.push(code._id);
+        club.save();
         res.status(201).json(code);
     } catch(err) {
         res.status(500).json({error: err.message});
