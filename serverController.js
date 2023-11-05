@@ -223,7 +223,7 @@ exports.createCode = async (req, res) => {
             return res.status(400).json({ message: "Code already exists." });
         }
 
-        const club = await Club.findOne({id: req.body.code});
+        const club = await Club.findOne({id: req.body.club});
 
         if (!club) {
             return res.status(400).json({ message: "Club dont exist"});
