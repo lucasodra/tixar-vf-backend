@@ -138,6 +138,36 @@ exports.joinClub = async (req, res) => {
     }
 };
 
+exports.getVfPosition = async(req, res) => {
+    try {
+        const { profileId, threshold } = req.body;
+
+        const profile = await Profile.findById(profileId);
+
+        if (!profile) {
+            return res.status(400).json({message: "Profile not found"});
+        }
+        
+        const club = await Club.findById(profile.club._id);
+
+        const totalProfile = await Profile.countDocuments({'club': club._id});
+        const cutOffIndex = Math.ceil(totalProfile * (threshold/100)) - 1;
+
+        const cutOffProfile = await Profile.find({'club': club._id}).sort({points: -1}).skip(cutOffIndex).limit(1);
+
+        if (cutOffProfile.length == 0) {
+            return res.status(200).json(true);
+        }
+
+        const isTop = profile.points >= cutOffProfile[0].points;
+
+        return res.status(200).json(isTop);
+
+    } catch(err) {
+        res.status(500).json({error: err.message});
+    }
+};
+
 // Profile Controllers
 exports.getProfilesByUser = async (req, res) => {
     try {

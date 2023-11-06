@@ -27,6 +27,7 @@ router.put('/code/:id', serverController.updateCode);
 router.delete('/code/:id', serverController.deleteCode);
 
 // Fan Routes
+router.post('/fan/eligibility',serverController.getVfPosition);
 router.get('/fans', serverController.getAllFans);
 router.get('/fan/:id', serverController.getFanById);
 router.get('/fan', serverController.getMyself);
