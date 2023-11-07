@@ -148,20 +148,9 @@ exports.getVfPosition = async(req, res) => {
             return res.status(400).json({message: "Profile not found"});
         }
         
-        const club = await Club.findById(profile.club._id);
+        const isEligible = profile.points >= threshold;
 
-        const totalProfile = await Profile.countDocuments({'club': club._id});
-        const cutOffIndex = Math.ceil(totalProfile * (threshold/100)) - 1;
-
-        const cutOffProfile = await Profile.find({'club': club._id}).sort({points: -1}).skip(cutOffIndex).limit(1);
-
-        if (cutOffProfile.length == 0) {
-            return res.status(200).json(true);
-        }
-
-        const isTop = profile.points >= cutOffProfile[0].points;
-
-        return res.status(200).json(isTop);
+        return res.status(200).json(isEligible);
 
     } catch(err) {
         res.status(500).json({error: err.message});
@@ -339,7 +328,7 @@ exports.getFanById = async (req, res) => {
               path: 'club', 
               select: 'name'
             }
-          });;
+          });
         if (!fan) return res.status(404).json({message: "Fan not found"});
         res.json(fan);
     } catch(err) {
